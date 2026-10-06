@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <?!= include('Styles'); ?>
+</head>
+<body>
+  <header class="topbar">
+    <div><strong>Anthology Hub</strong><span>Public portfolio demo</span></div>
+    <button id="progressButton" type="button">Progress</button>
+  </header>
+
+  <main>
+    <section id="library" class="library">
+      <div class="hero">
+        <p class="eyebrow">EXPLORE CONNECTIONS</p>
+        <h1>Read closely. Notice patterns. Build connections.</h1>
+        <p>A sanitized Google Apps Script demonstration of an interactive literary workspace.</p>
+        <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Search titles, authors or ideas"></label>
+        <div id="filters" class="filters"></div>
+      </div>
+      <div class="constellation-key"><span><i class="key-dot available"></i> Public-domain workspace available</span><span><i class="key-dot locked"></i> Title shown for navigation only</span></div>
+      <div id="cards" class="cards constellation"></div>
+    </section>
+
+    <section id="workspace" class="workspace" hidden>
+      <button id="back" class="back" type="button">← All texts</button>
+      <div class="workspace-grid">
+        <article class="reading-card">
+          <p class="eyebrow">TEXT WORKSPACE</p>
+          <h2 id="poemTitle"></h2>
+          <p id="poemAuthor" class="author"></p>
+          <blockquote id="poemExcerpt"></blockquote>
+          <div id="poemTags" class="tag-row"></div>
+        </article>
+        <aside class="notes-card">
+          <p class="eyebrow">YOUR NOTES</p>
+          <h3>What do you notice?</h3>
+          <textarea id="notes" rows="10" placeholder="Capture an idea, technique, connection or question…"></textarea>
+          <label class="check"><input id="highlight" type="checkbox"> Mark as a text I want to revisit</label>
+          <div class="actions"><button id="save" type="button">Save progress</button><span id="status"></span></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="progressDialog">
+    <button class="dialog-close" id="closeProgress" type="button">×</button>
+    <p class="eyebrow">MY JOURNEY</p>
+    <h2>Progress</h2>
+    <div id="progressBody"></div>
+    <button id="reset" class="secondary" type="button">Reset demo data</button>
+  </dialog>
+
+  <?!= include('Poems'); ?>
+  <?!= include('Scripts'); ?>
+</body>
+</html>
