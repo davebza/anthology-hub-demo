@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anthology Hub — Portfolio Demo</title>
+<style>
+:root{--ink:#172331;--muted:#68778a;--line:#dfe5eb;--paper:#fff;--bg:#f4f6f8;--nav:#172331;--accent:#466d8f;--gold:#f6df78;--blue:#bfe1f5;--green:#cfe8d5;--pink:#f1cdd5}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}
+button,textarea,input{font:inherit}.top{background:var(--nav);color:white;padding:14px 22px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:20}.brand{font-weight:800;font-size:19px}.demo{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#cbd5df}.spacer{flex:1}.save{font-size:13px;color:#cbd5df}.layout{display:grid;grid-template-columns:270px minmax(0,1fr) 330px;min-height:calc(100vh - 52px)}
+.left,.right{background:#fff;border-right:1px solid var(--line);padding:22px}.right{border-right:0;border-left:1px solid var(--line)}.left h3,.right h3{margin:0 0 14px;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.texts{display:grid;gap:8px}.textbtn{border:0;background:transparent;text-align:left;padding:11px 12px;border-radius:9px;color:#536273;cursor:pointer}.textbtn.active{background:#edf2f6;color:var(--ink);font-weight:700}.textbtn.locked:after{content:"demo";float:right;font-size:10px;text-transform:uppercase;color:#9aa7b5}
+main{padding:32px 38px 70px;max-width:930px;margin:auto;width:100%}.eyebrow{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.title{font-family:Georgia,serif;font-size:42px;margin:8px 0 6px}.sub{color:var(--muted);margin-bottom:28px}.task{background:#eaf1f6;border-left:4px solid var(--accent);padding:14px 17px;border-radius:7px;margin-bottom:25px;line-height:1.45}.reading{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:34px 38px;box-shadow:0 2px 10px rgba(20,35,50,.04)}.reading p{font-family:Georgia,serif;font-size:20px;line-height:1.75;margin:0 0 20px}.sentence{border-radius:4px;cursor:pointer;padding:2px 1px}.sentence:hover{background:#eef3f7}.sentence.hl-yellow{background:var(--gold)}.sentence.hl-blue{background:var(--blue)}.sentence.hl-green{background:var(--green)}.sentence.hl-pink{background:var(--pink)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 0}.tool{border:1px solid var(--line);background:white;padding:8px 11px;border-radius:8px;cursor:pointer}.swatch{width:16px;height:16px;border-radius:50%;display:inline-block;vertical-align:-3px;margin-right:5px}.hint{font-size:12px;color:var(--muted);margin-top:10px}
+.card{border:1px solid var(--line);border-radius:12px;padding:15px;margin-bottom:15px}.card label{display:block;font-size:12px;font-weight:800;margin-bottom:8px}.card textarea{width:100%;min-height:90px;resize:vertical;border:1px solid var(--line);border-radius:8px;padding:10px;line-height:1.4}.card textarea:focus{outline:2px solid #b9d0e1;border-color:transparent}.count{font-size:12px;color:var(--muted);margin-top:7px}.evidence{font-size:13px;line-height:1.45;background:#f7f9fb;border-radius:8px;padding:10px;margin-top:8px}.empty{color:#8996a5;font-style:italic}.privacy{font-size:12px;color:var(--muted);line-height:1.45;padding-top:12px;border-top:1px solid var(--line)}
+.pill{display:inline-block;border-radius:999px;background:#edf2f6;padding:5px 9px;font-size:11px;font-weight:700;margin:2px 2px 0 0}.reset{border:0;background:none;color:#7c8998;text-decoration:underline;cursor:pointer;padding:0;font-size:12px}
+@media(max-width:1050px){.layout{grid-template-columns:210px minmax(0,1fr)}.right{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.right h3,.privacy{grid-column:1/-1}.card{margin:0}}
+@media(max-width:720px){.layout{display:block}.left{border-right:0;border-bottom:1px solid var(--line)}.texts{grid-template-columns:1fr 1fr}.left .textbtn:nth-child(n+5){display:none}main{padding:24px 16px}.reading{padding:24px 20px}.title{font-size:34px}.right{display:block}.card{margin-bottom:14px}.demo{display:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand">Anthology Hub</div><div class="demo">Portfolio demo · synthetic data</div><div class="spacer"></div><div class="save" id="saveState">Saved locally</div></header>
+<div class="layout">
+<aside class="left">
+<h3>Anthology</h3>
+<div class="texts">
+<button class="textbtn active">01 · The Last Tram</button>
+<button class="textbtn locked">02 · A Letter Home</button>
+<button class="textbtn locked">03 · Night Crossing</button>
+<button class="textbtn locked">04 · Small Worlds</button>
+<button class="textbtn locked">05 · The Interview</button>
+<button class="textbtn locked">06 · Borders</button>
+</div>
+<div style="margin-top:25px"><h3>Focus</h3><span class="pill">Voice</span><span class="pill">Identity</span><span class="pill">Place</span></div>
+</aside>
+<main>
+<div class="eyebrow">Reading workspace · Text 01</div>
+<h1 class="title">The Last Tram</h1>
+<div class="sub">Original text created for this public demonstration.</div>
+<div class="task"><strong>Reading focus:</strong> How does the writer construct a voice that feels both observant and uncertain? Highlight useful evidence, then build an interpretation in the panel.</div>
+<section class="reading" id="reading">
+<p><span class="sentence" data-id="s1">By the time the last tram arrived, the rain had polished the rails into two bright lines.</span> <span class="sentence" data-id="s2">Mara stood beneath the timetable pretending to read it, although she knew every departure by heart.</span></p>
+<p><span class="sentence" data-id="s3">Across the road, the bakery was dark except for a square of yellow light above the stairs.</span> <span class="sentence" data-id="s4">Someone was still awake up there, moving from room to room, living a life she could only measure in shadows.</span></p>
+<p><span class="sentence" data-id="s5">The tram doors opened with a tired sigh.</span> <span class="sentence" data-id="s6">She stepped forward, stopped, and looked once more at the street behind her.</span> <span class="sentence" data-id="s7">It seemed smaller than it had that morning.</span></p>
+<div class="toolbar">
+<button class="tool" data-col="yellow"><span class="swatch" style="background:var(--gold)"></span>Evidence</button>
+<button class="tool" data-col="blue"><span class="swatch" style="background:var(--blue)"></span>Voice</button>
+<button class="tool" data-col="green"><span class="swatch" style="background:var(--green)"></span>Method</button>
+<button class="tool" data-col="pink"><span class="swatch" style="background:var(--pink)"></span>Question</button>
+<button class="tool" id="clear">Clear selected</button>
+</div>
+<div class="hint">Choose a colour, then click a sentence. Your annotations are stored only in this browser.</div>
+</section>
+</main>
+<aside class="right">
+<h3>Your thinking</h3>
+<div class="card"><label>Selected evidence</label><div id="evidence" class="evidence empty">Click a sentence to collect evidence.</div></div>
+<div class="card"><label for="interpretation">Interpretation</label><textarea id="interpretation" placeholder="What does the evidence suggest about the speaker or perspective?"></textarea><div class="count"><span id="icount">0</span> characters</div></div>
+<div class="card"><label for="connection">Concept connection</label><textarea id="connection" placeholder="Connect this moment to voice, identity or place..."></textarea><div class="count"><span id="ccount">0</span> characters</div></div>
+<div class="privacy"><strong>Privacy by design.</strong> This public version uses no student identities, school systems, credentials or licensed anthology text. Notes stay in local browser storage. <button class="reset" id="reset">Reset demo</button></div>
+</aside>
+</div>
+<script>
+const KEY='anthologyHubDemoV1';let active='yellow',selected=null;
+let state={highlights:{},evidence:[],interpretation:'',connection:''};
+try{state={...state,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(e){}
+const save=()=>{localStorage.setItem(KEY,JSON.stringify(state));const el=document.getElementById('saveState');el.textContent='Saved';setTimeout(()=>el.textContent='Saved locally',700)};
+function render(){
+ document.querySelectorAll('.sentence').forEach(s=>{s.className='sentence';if(state.highlights[s.dataset.id])s.classList.add('hl-'+state.highlights[s.dataset.id])});
+ const ev=document.getElementById('evidence');if(state.evidence.length){ev.className='evidence';ev.innerHTML=state.evidence.map(id=>'<div style="margin-bottom:7px">“'+document.querySelector('[data-id="'+id+'"]').textContent+'”</div>').join('')}else{ev.className='evidence empty';ev.textContent='Click a sentence to collect evidence.'}
+ document.getElementById('interpretation').value=state.interpretation||'';document.getElementById('connection').value=state.connection||'';counts()
+}
+function counts(){document.getElementById('icount').textContent=document.getElementById('interpretation').value.length;document.getElementById('ccount').textContent=document.getElementById('connection').value.length}
+document.querySelectorAll('[data-col]').forEach(b=>b.onclick=()=>{active=b.dataset.col;document.querySelectorAll('[data-col]').forEach(x=>x.style.outline='');b.style.outline='2px solid #7895ad'});
+document.querySelectorAll('.sentence').forEach(s=>s.onclick=()=>{selected=s.dataset.id;state.highlights[selected]=active;if(!state.evidence.includes(selected))state.evidence.push(selected);save();render()});
+document.getElementById('clear').onclick=()=>{if(selected){delete state.highlights[selected];state.evidence=state.evidence.filter(x=>x!==selected);selected=null;save();render()}};
+['interpretation','connection'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{state[id]=e.target.value;counts();save()}));
+document.getElementById('reset').onclick=()=>{localStorage.removeItem(KEY);state={highlights:{},evidence:[],interpretation:'',connection:''};render()};
+render();document.querySelector('[data-col="yellow"]').style.outline='2px solid #7895ad';
+</script>
+</body></html>
