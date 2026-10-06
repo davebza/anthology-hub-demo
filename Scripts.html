@@ -1,0 +1,86 @@
+<script>
+let state = {notes:{}, highlights:{}, visited:[]};
+let currentId = null;
+const $ = (id) => document.getElementById(id);
+
+function gas(method, arg) {
+  return new Promise((resolve, reject) => {
+    const runner = google.script.run.withSuccessHandler(resolve).withFailureHandler(reject);
+    if (typeof arg === 'undefined') runner[method](); else runner[method](arg);
+  });
+}
+
+function allTags() {
+  return [...new Set(POEMS.flatMap(p => p.tags))].sort();
+}
+
+function renderFilters() {
+  $('filters').innerHTML = ['all', ...allTags()].map(t => `<button class="filter ${t==='all'?'active':''}" data-filter="${t}">${t}</button>`).join('');
+  document.querySelectorAll('.filter').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter').forEach(x => x.classList.remove('active'));
+    btn.classList.add('active'); renderCards();
+  }));
+}
+
+function renderCards() {
+  const q = $('search').value.trim().toLowerCase();
+  const active = document.querySelector('.filter.active')?.dataset.filter || 'all';
+  const visible = POEMS.filter(p => {
+    const hay = [p.title,p.author,...p.tags].join(' ').toLowerCase();
+    return (!q || hay.includes(q)) && (active === 'all' || p.tags.includes(active));
+  });
+  $('cards').innerHTML = visible.map(p => `
+    <button class="text-card poem-node ${p.publicDomain?'available':'locked'}" data-id="${p.id}" ${p.publicDomain?'':'disabled'} aria-label="${p.title} by ${p.author}${p.publicDomain?'':' — text omitted from public demo'}">
+      <span class="card-status">${p.publicDomain ? (state.visited.includes(p.id)?'VISITED · OPEN':'PUBLIC DOMAIN · OPEN') : '🔒 TEXT OMITTED'}</span>
+      <span class="hex-inner"><strong>${p.title}</strong><span>${p.author}</span></span>
+      <small>${p.tags.join(' · ')}</small>
+      ${p.publicDomain ? '<span class="open-hint">Explore text →</span>' : '<span class="lock-hint">Visible for anthology relationships only</span>'}
+    </button>`).join('');
+  document.querySelectorAll('.text-card.available').forEach(card => card.addEventListener('click', () => openText(card.dataset.id)));
+}
+
+function openText(id) {
+  const p = POEMS.find(x => x.id === id); if (!p || !p.publicDomain) return;
+  currentId = id;
+  if (!state.visited.includes(id)) state.visited.push(id);
+  $('poemTitle').textContent = p.title;
+  $('poemAuthor').textContent = p.author;
+  $('poemExcerpt').textContent = p.excerpt;
+  $('poemTags').innerHTML = p.tags.map(t=>`<span>${t}</span>`).join('');
+  $('notes').value = state.notes[id] || '';
+  $('highlight').checked = !!state.highlights[id];
+  $('status').textContent = '';
+  $('library').hidden = true; $('workspace').hidden = false;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+async function saveCurrent() {
+  if (!currentId) return;
+  state.notes[currentId] = $('notes').value;
+  state.highlights[currentId] = $('highlight').checked;
+  $('status').textContent = 'Saving…';
+  try { const result = await gas('saveDemoState', state); state = result.state; $('status').textContent = 'Saved'; }
+  catch (err) { $('status').textContent = 'Could not save'; }
+}
+
+function showProgress() {
+  const visited = state.visited.filter(id => POEMS.some(p => p.id === id && p.publicDomain)).length;
+  const notes = Object.values(state.notes).filter(Boolean).length;
+  const revisit = Object.values(state.highlights).filter(Boolean).length;
+  $('progressBody').innerHTML = `<div class="stats"><div><strong>${visited}</strong><span>texts visited</span></div><div><strong>${notes}</strong><span>notes saved</span></div><div><strong>${revisit}</strong><span>to revisit</span></div></div>`;
+  $('progressDialog').showModal();
+}
+
+async function init() {
+  renderFilters();
+  try { state = await gas('getDemoState'); } catch(e) {}
+  renderCards();
+  $('search').addEventListener('input', renderCards);
+  $('back').addEventListener('click', () => { $('workspace').hidden=true; $('library').hidden=false; renderCards(); });
+  $('save').addEventListener('click', saveCurrent);
+  $('progressButton').addEventListener('click', showProgress);
+  $('closeProgress').addEventListener('click', () => $('progressDialog').close());
+  $('reset').addEventListener('click', async () => { const r=await gas('resetDemoState'); state=r.state; $('progressDialog').close(); renderCards(); });
+}
+init();
+</script>
